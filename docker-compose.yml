@@ -27,10 +27,18 @@ services:
       retries: 2
       start_period: 2s
   api:
+    build:
+      context: .
+      dockerfile: dockerfile
+      args:
+        PORT: 80
+    ports:
+      - 7000:80
+  hasura:
     image: hasura/graphql-engine:v2.37.0
     restart: always
     ports:
-      - 8080:8080
+      - 6001:8080
     environment:
       DATABASE_URL: postgres://postgres:password@database:5432/data
       # HASURA_GRAPHQL_ADMIN_SECRET: secret
@@ -43,5 +51,7 @@ services:
     depends_on:
       health:
         condition: service_healthy
+      api:
+        condition: service_started
 volumes:
   data:
