@@ -5,7 +5,7 @@ import {ruruHTML} from 'ruru/server'
 import type {Router, Request, Response} from 'express'
 
 import schema from './schema.js'
-import {ping} from './endpoints/health.js'
+import {ping} from './endpoints/index.js'
 
 const graphql: Router = express.Router()
 
